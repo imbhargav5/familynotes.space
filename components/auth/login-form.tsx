@@ -1,6 +1,4 @@
 "use client"
-
-import type React from "react"
 import { useFormState, useFormStatus } from "react-dom"
 import Link from "next/link"
 import { login, type LoginState } from "@/app/login/actions"
@@ -12,7 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 function SubmitButton() {
   const { pending } = useFormStatus()
-  
+
   return (
     <Button type="submit" className="w-full" disabled={pending}>
       {pending ? "Logging in..." : "Login"}
@@ -38,22 +36,11 @@ export function LoginForm() {
           )}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="your@email.com"
-              required
-            />
+            <Input id="email" name="email" type="email" placeholder="your@email.com" required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-            />
+            <Input id="password" name="password" type="password" required />
           </div>
           <SubmitButton />
         </form>

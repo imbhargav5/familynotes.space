@@ -7,7 +7,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="border-b">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+        <div className="max-w-screen-xl mx-auto flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2">
             <BookOpen className="h-6 w-6" />
             <span className="font-bold text-xl">Family Notes</span>
@@ -39,8 +39,8 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-white to-gray-50">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_650px]">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -81,7 +81,7 @@ export default function LandingPage() {
 
         {/* Features Section */}
         <section id="features" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -143,9 +143,9 @@ export default function LandingPage() {
 
         {/* AI Notes Section */}
         <section id="ai" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[600px_1fr] lg:gap-12 xl:grid-cols-[650px_1fr]">
-              <div className="flex items-center justify-center">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+              <div className="flex items-center justify-center order-2 lg:order-1">
                 <Image
                   src="/ai-notes-rewrite.png"
                   width={600}
@@ -154,7 +154,7 @@ export default function LandingPage() {
                   className="rounded-lg shadow-lg"
                 />
               </div>
-              <div className="flex flex-col justify-center space-y-4">
+              <div className="flex flex-col justify-center space-y-4 order-1 lg:order-2">
                 <div className="space-y-2">
                   <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">AI-Powered</div>
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Smart Notes with AI</h2>
@@ -187,7 +187,7 @@ export default function LandingPage() {
 
         {/* Tracking Section */}
         <section id="tracking" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -233,8 +233,8 @@ export default function LandingPage() {
 
         {/* Collaboration Section */}
         <section id="collaboration" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_650px]">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
@@ -281,13 +281,13 @@ export default function LandingPage() {
 
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
-          <div className="container px-4 md:px-6">
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                   Start Organizing Your Family Notes Today
                 </h2>
-                <p className="max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[600px] mx-auto md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Join thousands of families who use Family Notes to stay organized and connected.
                 </p>
               </div>
@@ -312,7 +312,7 @@ export default function LandingPage() {
         </section>
       </main>
       <footer className="border-t bg-gray-50">
-        <div className="container flex flex-col gap-6 py-8 px-4 md:px-6 md:flex-row md:justify-between">
+        <div className="max-w-screen-xl mx-auto flex flex-col gap-6 py-8 px-4 md:px-6 md:flex-row md:justify-between">
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
               <BookOpen className="h-5 w-5" />
@@ -404,7 +404,7 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="border-t py-6">
-          <div className="container flex flex-col items-center justify-between gap-4 px-4 md:px-6 md:flex-row">
+          <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-between gap-4 px-4 md:px-6 md:flex-row">
             <p className="text-xs text-gray-500">© {new Date().getFullYear()} Family Notes. All rights reserved.</p>
             <div className="flex gap-4">
               <Link href="#" className="text-gray-500 hover:text-gray-900">

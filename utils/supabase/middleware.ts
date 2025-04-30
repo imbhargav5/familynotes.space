@@ -28,11 +28,11 @@ export async function updateSession(request: NextRequest) {
   // IMPORTANT: DO NOT REMOVE auth.getUser()
   const {
     data: { user },
-    error
+    error,
   } = await supabase.auth.getUser()
 
-  console.log(user);
-  console.log(error);
+  console.log(user)
+  console.log(error)
 
   // Define public routes that don't require authentication
   const isPublicRoute =
@@ -51,12 +51,11 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/folders") ||
     request.nextUrl.pathname.startsWith("/billing") ||
     request.nextUrl.pathname.startsWith("/memes")
-  console.log(user);
-  console.log(error);
-  console.log(request.nextUrl.pathname);
+  console.log(user)
+  console.log(error)
+  console.log(request.nextUrl.pathname)
   // Redirect to login if trying to access authenticated route without a session
   if (!user && isAuthenticatedRoute) {
-
     // For non-API routes, redirect to login
     const url = request.nextUrl.clone()
     url.pathname = "/login"

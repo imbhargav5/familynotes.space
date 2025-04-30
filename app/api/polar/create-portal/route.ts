@@ -1,10 +1,5 @@
 import { NextResponse } from "next/server"
-import Stripe from "stripe"
 import { createServerClient } from "@/lib/supabase-server"
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16",
-})
 
 export async function POST(req: Request) {
   try {
@@ -25,22 +20,35 @@ export async function POST(req: Request) {
       return new NextResponse("Missing return URL", { status: 400 })
     }
 
-    // Get the user's Stripe customer ID
+    // Get the user's Polar customer ID
     const { data: userMetadata } = await supabase
       .from("users_metadata")
-      .select("stripe_customer_id")
+      .select("polar_customer_id")
       .eq("user_id", user.id)
       .single()
 
-    if (!userMetadata?.stripe_customer_id) {
-      return new NextResponse("No Stripe customer found", { status: 404 })
+    if (!userMetadata?.polar_customer_id) {
+      return new NextResponse("No Polar customer found", { status: 404 })
     }
 
-    // Create a billing portal session
-    const session = await stripe.billingPortal.sessions.create({
-      customer: userMetadata.stripe_customer_id,
-      return_url: returnUrl,
+    // Create a billing portal session with Polar
+    const portalResponse = await fetch(`${process.env.POLAR_API_URL}/customer-portal-sessions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.POLAR_API_KEY}`,
+      },
+      body: JSON.stringify({
+        customer_id: userMetadata.polar_customer_id,
+        return_url: returnUrl,
+      }),
     })
+
+    if (!portalResponse.ok) {
+      throw new Error("Failed to create portal session")
+    }
+
+    const session = await portalResponse.json()
 
     return new NextResponse(JSON.stringify({ url: session.url }), {
       status: 200,

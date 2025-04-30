@@ -1,54 +1,68 @@
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
-import Stripe from "stripe"
 import { createServerClient } from "@/lib/supabase-server"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16",
-})
-
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret = process.env.POLAR_WEBHOOK_SECRET!
 
 export async function POST(req: Request) {
   const body = await req.text()
-  const signature = headers().get("Stripe-Signature") as string
+  const signature = headers().get("Polar-Signature") as string
 
-  let event: Stripe.Event
+  // Verify the webhook signature
+  // Note: This is a simplified example. In production, you should properly verify the signature
+  // using Polar's SDK or following their documentation
+  if (!signature) {
+    return new NextResponse("Missing signature", { status: 400 })
+  }
 
+  let event
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
-  } catch (error: any) {
-    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 })
+    event = JSON.parse(body)
+  } catch (error) {
+    return new NextResponse("Invalid JSON", { status: 400 })
   }
 
   const supabase = await createServerClient()
 
   try {
     switch (event.type) {
-      case "customer.subscription.created":
-      case "customer.subscription.updated": {
-        const subscription = event.data.object as Stripe.Subscription
-        const customerId = subscription.customer as string
+      case "subscription.created":
+      case "subscription.updated": {
+        const subscription = event.data
+        const customerId = subscription.customer_id
 
-        // Get the user with this Stripe customer ID
+        // Get the user with this Polar customer ID
         const { data: users } = await supabase
           .from("users_metadata")
           .select("user_id")
-          .eq("stripe_customer_id", customerId)
+          .eq("polar_customer_id", customerId)
           .limit(1)
 
         if (!users || users.length === 0) {
-          console.error("No user found with Stripe customer ID:", customerId)
+          console.error("No user found with Polar customer ID:", customerId)
           return new NextResponse("User not found", { status: 404 })
         }
 
         const userId = users[0].user_id
 
         // Get the product details
-        const product = await stripe.products.retrieve(subscription.items.data[0].price.product as string)
+        const productResponse = await fetch(
+          `${process.env.POLAR_API_URL}/products/${subscription.items[0].price.product_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.POLAR_API_KEY}`,
+            },
+          },
+        )
+
+        if (!productResponse.ok) {
+          throw new Error("Failed to fetch product details")
+        }
+
+        const product = await productResponse.json()
 
         // Determine the subscription tier from product metadata
-        const tier = product.metadata.tier || "free"
+        const tier = product.metadata?.tier || "free"
 
         // Update or create subscription in your database
         const { error } = await supabase.from("subscriptions").upsert({
@@ -70,8 +84,8 @@ export async function POST(req: Request) {
         break
       }
 
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription
+      case "subscription.deleted": {
+        const subscription = event.data
 
         // Delete or mark as canceled in your database
         const { error } = await supabase

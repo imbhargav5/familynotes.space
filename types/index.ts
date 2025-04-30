@@ -94,3 +94,20 @@ export type MemeGeneration = {
   output_url: string | null
   created_at: string
 }
+
+export type AiChatConversation = {
+  id: string
+  title: string
+  user_id: string
+  created_at: string
+  updated_at: string
+}
+
+export type AiChatMessage = {
+  id: string
+  conversation_id: string
+  user_id: string
+  role: string
+  content: string
+  created_at: string
+}

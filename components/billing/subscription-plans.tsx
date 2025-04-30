@@ -17,7 +17,7 @@ export function SubscriptionPlans({ prices, currentSubscription }: SubscriptionP
   const handleSubscribe = async (priceId: string) => {
     setLoading(priceId)
     try {
-      const response = await fetch("/api/stripe/create-checkout", {
+      const response = await fetch("/api/polar/create-checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

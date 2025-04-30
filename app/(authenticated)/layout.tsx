@@ -1,4 +1,3 @@
-
 import type React from "react"
 
 import { redirect } from "next/navigation"
@@ -6,7 +5,7 @@ import { Sidebar } from "@/components/sidebar/sidebar"
 import { UserProfile } from "@/components/user-profile"
 import { createClient } from "@/lib/supabase-server"
 
-export  default async function AuthenticatedLayout({
+export default async function AuthenticatedLayout({
   children,
 }: {
   children: React.ReactNode
@@ -14,7 +13,7 @@ export  default async function AuthenticatedLayout({
   const supabase = await createClient()
   const { data, error } = await supabase.auth.getSession()
   if (error || !data?.session) {
-    redirect('/login')
+    redirect("/login")
   }
 
   return (

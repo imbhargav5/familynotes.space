@@ -20,7 +20,7 @@ export function BillingInfo({ subscription }: BillingInfoProps) {
   const handleManageSubscription = async () => {
     setLoading(true)
     try {
-      const response = await fetch("/api/stripe/create-portal", {
+      const response = await fetch("/api/polar/create-portal", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

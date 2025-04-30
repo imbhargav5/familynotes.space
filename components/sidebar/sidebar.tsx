@@ -12,6 +12,7 @@ import {
   PlusCircle,
   CreditCard,
   ImageIcon,
+  MessageSquare,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -224,6 +225,17 @@ export function Sidebar() {
                 >
                   <ImageIcon className="mr-2 h-4 w-4" />
                   <span>Meme Generator</span>
+                </div>
+              </Link>
+              <Link href="/ai-chat">
+                <div
+                  className={cn(
+                    "flex items-center rounded-md px-4 py-2 text-sm",
+                    pathname.startsWith("/ai-chat") ? "bg-accent text-accent-foreground" : "hover:bg-accent/50",
+                  )}
+                >
+                  <MessageSquare className="mr-2 h-4 w-4" />
+                  <span>AI Chat</span>
                 </div>
               </Link>
               <Link href="/billing">
