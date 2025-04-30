@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 })
   }
 
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
 
   try {
     switch (event.type) {

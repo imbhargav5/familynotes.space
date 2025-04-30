@@ -3,7 +3,7 @@ import { createServerClient } from "@/lib/supabase-server"
 import { FolderForm } from "@/components/folders/folder-form"
 
 export default async function NewFolderPage() {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
 
   // Check if user is authenticated
   const {

@@ -5,7 +5,7 @@ import { SubscriptionPlans } from "@/components/billing/subscription-plans"
 import type { Subscription } from "@/types"
 
 export default async function BillingPage() {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
 
   // Check if user is authenticated
   const {

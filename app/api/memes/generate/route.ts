@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 
 export async function POST(req: Request) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {

@@ -3,7 +3,7 @@ import { createServerClient } from "@/lib/supabase-server"
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {
@@ -34,7 +34,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {
@@ -78,7 +78,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {

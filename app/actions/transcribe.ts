@@ -4,7 +4,7 @@ import { createServerClient } from "@/lib/supabase-server"
 
 export async function transcribeAudio(formData: FormData) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {

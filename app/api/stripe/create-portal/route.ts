@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: Request) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Get the current user
     const {

@@ -3,7 +3,7 @@ import { createServerClient } from "@/lib/supabase-server"
 
 export async function GET(req: Request) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {
@@ -42,7 +42,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
 
     // Check if user is authenticated
     const {
