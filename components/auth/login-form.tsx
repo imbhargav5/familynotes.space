@@ -1,51 +1,27 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useFormState, useFormStatus } from "react-dom"
 import Link from "next/link"
-import { supabase } from "@/lib/supabase"
+import { login, type LoginState } from "@/app/login/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  
+  return (
+    <Button type="submit" className="w-full" disabled={pending}>
+      {pending ? "Logging in..." : "Login"}
+    </Button>
+  )
+}
+
 export function LoginForm() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
-
-    try {
-      const { error, data } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-
-      if (error) {
-        setError(error.message)
-        return
-      }
-
-      if (data.session) {
-        // Force a hard navigation to ensure the page is fully reloaded
-        window.location.href = "/dashboard"
-      }
-    } catch (err) {
-      setError("An unexpected error occurred")
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const [state, formAction] = useFormState<LoginState, FormData>(login, null)
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -54,20 +30,19 @@ export function LoginForm() {
         <CardDescription>Enter your email and password to access your notes</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleLogin} className="space-y-4">
-          {error && (
+        <form action={formAction} className="space-y-4">
+          {state?.error && (
             <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription>{state.error}</AlertDescription>
             </Alert>
           )}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -75,15 +50,12 @@ export function LoginForm() {
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
+              name="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </Button>
+          <SubmitButton />
         </form>
       </CardContent>
       <CardFooter className="flex justify-center">

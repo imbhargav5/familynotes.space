@@ -93,10 +93,10 @@ importers:
         specifier: 1.1.6
         version: 1.1.6(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@supabase/ssr':
-        specifier: latest
+        specifier: ^0.6.1
         version: 0.6.1(@supabase/supabase-js@2.49.4)
       '@supabase/supabase-js':
-        specifier: latest
+        specifier: ^2.49.4
         version: 2.49.4
       '@tiptap/core':
         specifier: latest

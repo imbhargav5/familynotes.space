@@ -31,6 +31,9 @@ export async function updateSession(request: NextRequest) {
     error
   } = await supabase.auth.getUser()
 
+  console.log(user);
+  console.log(error);
+
   // Define public routes that don't require authentication
   const isPublicRoute =
     request.nextUrl.pathname === "/" ||
